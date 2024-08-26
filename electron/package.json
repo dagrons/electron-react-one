@@ -5,9 +5,8 @@
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron-forge start",
-    "package": "electron-forge package",
-    "make": "electron-forge make"
+    "start": "electron .",
+    "build": "electron-builder"
   },
   "keywords": [],
   "author": "",
@@ -21,9 +20,34 @@
     "@electron-forge/plugin-auto-unpack-natives": "^7.4.0",
     "@electron-forge/plugin-fuses": "^7.4.0",
     "@electron/fuses": "^1.8.0",
-    "electron": "^32.0.1"
+    "electron": "^32.0.1",
+    "electron-builder": "^24.13.3"
   },
   "dependencies": {
     "electron-squirrel-startup": "^1.0.1"
+  },
+   "build": {
+    "appId": "com.example.myapp",
+    "productName": "MyElectronApp",
+    "files": [
+      "dist/**/*",
+      "main.js",
+      "preload.js"
+    ],
+    "directories": {
+      "output": "build"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon.ico"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "build/icon.icns"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "build"
+    }
   }
 }
