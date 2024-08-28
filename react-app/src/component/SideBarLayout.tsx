@@ -2,38 +2,59 @@ import styled from "@emotion/styled";
 import {Box, IconButton} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import MenuIcon from '@mui/icons-material/Menu';
+import {useEffect} from "react";
 
 
 const SidebarBox = styled(Box, {
     shouldForwardProp(propName) {
-        return propName != "theme" || propName != "open"
+        return !['theme', 'open', 'sideBarWidth', 'transitionEnabled'].includes(propName);
     }
-})(({theme, open}) => ({
+})(({theme, open, sideBarWidth, transitionEnabled}) => ({
     position: "absolute",
-    transform: open ? "translateX(0)" : "translateX(-100%)",
     // size
     color: "rgb(49, 51, 63)",
     minHeight: "100vh",
-    width: "25%",
+    width: open? sideBarWidth : 0,
     overflow: "hidden",
     // color
     backgroundColor: theme.palette.grey[100],
     // transition
-    transition: theme.transitions.create(['transform'], {
+    transition: transitionEnabled? theme.transitions.create(['width'], {
         duration: theme.transitions.duration.standard,
         easing: theme.transitions.easing.sharp
-    }),
+    }) : "none",
     // zIndex
     elevation: theme.zIndex.drawer + 1,
 }))
 
 
-export const Sidebar = ({children, isOpen, setisOpen}) => {
+export const Sidebar = ({children, isOpen, setIsOpen, sideBarWidth, setSideBarWidth, isDragging, setIsDragging, transitionEnabled, setTransitionEnabled}) => {
+    useEffect(() => {
+        const handleMouseMove = (e) => {
+            if (isDragging) {
+                setTransitionEnabled(false)
+                const newWidth = e.clientX;
+                if (newWidth > 210) {
+                    setSideBarWidth(newWidth)
+                }
+            }
+        }
+        const handleMouseUp = (e) => {
+            setIsDragging(false);
+            setTransitionEnabled(true);
+        }
+        document.addEventListener("mousemove", handleMouseMove);
+        document.addEventListener("mouseup", handleMouseUp);
+        return () => {
+            document.removeEventListener("mousemove", handleMouseMove);
+            document.removeEventListener("mouseup", handleMouseUp);
+        }
+    }, [isDragging])
     return (
-        <SidebarBox open={isOpen}>
+        <SidebarBox open={isOpen} sideBarWidth={sideBarWidth} transitionEnabled={transitionEnabled}>
             <IconButton
                 onClick={() => {
-                    setisOpen(isOpen => !isOpen)
+                    setIsOpen(isOpen => !isOpen)
                 }}
                 sx={{
                     padding: 1.5,
@@ -54,10 +75,10 @@ export const Sidebar = ({children, isOpen, setisOpen}) => {
                 height: "100%",
                 cursor: "ew-resize",
                 position: "absolute",
-                top: 0,
                 right: 0,
+                top: 0,
                 zIndex: 1
-            }}>
+            }} onMouseDown={() => {setIsDragging(true)}}>
             </Box>
         </SidebarBox>
     )
@@ -65,27 +86,27 @@ export const Sidebar = ({children, isOpen, setisOpen}) => {
 
 const MainContentBox = styled(Box, {
     shouldForwardProp(propName) {
-        return propName != "theme" || propName != "open"
+        return !['theme', 'open', 'sideBarWidth', 'transitionEnabled'].includes(propName);
     }
-})(({theme, open}) => ({
+})(({theme, open, sideBarWidth, transitionEnabled}) => ({
     // size
     color: "rgb(49, 51, 63)",
     minHeight: "100vh",
     overflow: "hidden",
-    marginLeft: open ? "25%" : 0,
+    marginLeft: open ? sideBarWidth : 0,
     // transition
-    transition: theme.transitions.create(['margin-left'], {
+    transition: transitionEnabled? theme.transitions.create(['margin-left'], {
         duration: theme.transitions.duration.standard,
         easing: theme.transitions.easing.sharp
-    }),
+    }) : "none",
 }))
 
-export const MainContent = ({children, isOpen, setisOpen}) => {
+export const MainContent = ({children, isOpen, setIsOpen, sideBarWidth, transitionEnabled}) => {
     return (
-        <MainContentBox open={isOpen}>
+        <MainContentBox open={isOpen} sideBarWidth={sideBarWidth} transitionEnabled={transitionEnabled}>
             <IconButton
                 onClick={() => {
-                    setisOpen(isOpen => !isOpen)
+                    setIsOpen(isOpen => !isOpen)
                 }}
                 sx={{
                     padding: 1.5,
