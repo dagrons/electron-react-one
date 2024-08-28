@@ -1,13 +1,13 @@
 import {createStore} from "redux";
 
-const initialState = {
+const sideBarState = {
     open: true,
     sideBarWidth: "25%",
     isDragging: false,
     transitionEnabled: true,
 }
 
-const reducer = (state=initialState, action) => {
+const sideBarReducer = (state=sideBarState, action) => {
     switch(action.type) {
         case 'SET_OPEN': return {...state, open: action.open};
         case 'SET_SIDEBAR_WIDTH': return {...state, sideBarWidth: action.sideBarWidth};
@@ -17,6 +17,6 @@ const reducer = (state=initialState, action) => {
     }
 }
 
-const store = createStore(reducer)
+const store = createStore(sideBarReducer)
 
 export default store;
