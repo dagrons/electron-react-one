@@ -3,7 +3,13 @@ import {Box, IconButton} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import MenuIcon from '@mui/icons-material/Menu';
 import {useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
 
+
+const setOpen = (open) => ({type: "SET_OPEN", open: open});
+const setSidebarWidth = (sideBarWidth) => ({type:"SET_SIDEBAR_WIDTH", sideBarWidth: sideBarWidth});
+const setIsDragging = (isDragging) => ({type: "SET_IS_DRAGGING", isDragging: isDragging});
+const setTransitionEnabled = (transitionEnabled) => ({type: "SET_TRANSITION_ENABLED", transitionEnabled: transitionEnabled});
 
 const SidebarBox = styled(Box, {
     shouldForwardProp(propName) {
@@ -28,20 +34,25 @@ const SidebarBox = styled(Box, {
 }))
 
 
-export const Sidebar = ({children, isOpen, setIsOpen, sideBarWidth, setSideBarWidth, isDragging, setIsDragging, transitionEnabled, setTransitionEnabled}) => {
+export const Sidebar = ({children}) => {
+    const isOpen = useSelector(state => state.open);
+    const sideBarWidth = useSelector(state => state.sideBarWidth);
+    const isDragging = useSelector(state => state.isDragging);
+    const transitionEnabled = useSelector(state => state.transitionEnabled);
+    const dispatch = useDispatch()
     useEffect(() => {
         const handleMouseMove = (e) => {
             if (isDragging) {
-                setTransitionEnabled(false)
+                dispatch(setTransitionEnabled(false))
                 const newWidth = e.clientX;
                 if (newWidth > 210) {
-                    setSideBarWidth(newWidth)
+                    dispatch(setSidebarWidth(newWidth))
                 }
             }
         }
         const handleMouseUp = (e) => {
-            setIsDragging(false);
-            setTransitionEnabled(true);
+            dispatch(setIsDragging(false));
+            dispatch(setTransitionEnabled(true));
         }
         document.addEventListener("mousemove", handleMouseMove);
         document.addEventListener("mouseup", handleMouseUp);
@@ -54,7 +65,7 @@ export const Sidebar = ({children, isOpen, setIsOpen, sideBarWidth, setSideBarWi
         <SidebarBox open={isOpen} sideBarWidth={sideBarWidth} transitionEnabled={transitionEnabled}>
             <IconButton
                 onClick={() => {
-                    setIsOpen(isOpen => !isOpen)
+                    dispatch(setOpen(!isOpen))
                 }}
                 sx={{
                     padding: 1.5,
@@ -78,7 +89,7 @@ export const Sidebar = ({children, isOpen, setIsOpen, sideBarWidth, setSideBarWi
                 right: 0,
                 top: 0,
                 zIndex: 1
-            }} onMouseDown={() => {setIsDragging(true)}}>
+            }} onMouseDown={() => {dispatch(setIsDragging(true))}}>
             </Box>
         </SidebarBox>
     )
@@ -101,12 +112,16 @@ const MainContentBox = styled(Box, {
     }) : "none",
 }))
 
-export const MainContent = ({children, isOpen, setIsOpen, sideBarWidth, transitionEnabled}) => {
+export const MainContent = ({children}) => {
+    const isOpen = useSelector(state => state.open);
+    const sideBarWidth = useSelector(state => state.sideBarWidth);
+    const transitionEnabled = useSelector(state => state.transitionEnabled);
+    const dispatch = useDispatch()
     return (
         <MainContentBox open={isOpen} sideBarWidth={sideBarWidth} transitionEnabled={transitionEnabled}>
             <IconButton
                 onClick={() => {
-                    setIsOpen(isOpen => !isOpen)
+                    dispatch(setOpen(!isOpen))
                 }}
                 sx={{
                     padding: 1.5,
