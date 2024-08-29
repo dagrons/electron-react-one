@@ -7,9 +7,12 @@ import {useDispatch, useSelector} from "react-redux";
 
 
 const setOpen = (open) => ({type: "SET_OPEN", open: open});
-const setSidebarWidth = (sideBarWidth) => ({type:"SET_SIDEBAR_WIDTH", sideBarWidth: sideBarWidth});
+const setSidebarWidth = (sideBarWidth) => ({type: "SET_SIDEBAR_WIDTH", sideBarWidth: sideBarWidth});
 const setIsDragging = (isDragging) => ({type: "SET_IS_DRAGGING", isDragging: isDragging});
-const setTransitionEnabled = (transitionEnabled) => ({type: "SET_TRANSITION_ENABLED", transitionEnabled: transitionEnabled});
+const setTransitionEnabled = (transitionEnabled) => ({
+    type: "SET_TRANSITION_ENABLED",
+    transitionEnabled: transitionEnabled
+});
 
 const SidebarBox = styled(Box, {
     shouldForwardProp(propName) {
@@ -20,12 +23,12 @@ const SidebarBox = styled(Box, {
     // size
     color: "rgb(49, 51, 63)",
     minHeight: "100vh",
-    width: open? sideBarWidth : 0,
+    width: open ? sideBarWidth : 0,
     overflow: "hidden",
     // color
     backgroundColor: theme.palette.grey[100],
     // transition
-    transition: transitionEnabled? theme.transitions.create(['width'], {
+    transition: transitionEnabled ? theme.transitions.create(['width'], {
         duration: theme.transitions.duration.standard,
         easing: theme.transitions.easing.sharp
     }) : "none",
@@ -89,7 +92,9 @@ export const Sidebar = ({children}) => {
                 right: 0,
                 top: 0,
                 zIndex: 1
-            }} onMouseDown={() => {dispatch(setIsDragging(true))}}>
+            }} onMouseDown={() => {
+                dispatch(setIsDragging(true))
+            }}>
             </Box>
         </SidebarBox>
     )
@@ -106,7 +111,7 @@ const MainContentBox = styled(Box, {
     overflow: "hidden",
     marginLeft: open ? sideBarWidth : 0,
     // transition
-    transition: transitionEnabled? theme.transitions.create(['margin-left'], {
+    transition: transitionEnabled ? theme.transitions.create(['margin-left'], {
         duration: theme.transitions.duration.standard,
         easing: theme.transitions.easing.sharp
     }) : "none",
