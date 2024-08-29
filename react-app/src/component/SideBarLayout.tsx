@@ -19,12 +19,15 @@ const SidebarBox = styled(Box, {
         return !['theme', 'open', 'sideBarWidth', 'transitionEnabled'].includes(propName);
     }
 })(({theme, open, sideBarWidth, transitionEnabled}) => ({
-    position: "absolute",
-    // size
+    // position
+    position: "relative",
+    // color
     color: "rgb(49, 51, 63)",
-    minHeight: "100vh",
+    // overflowX
+    overflowY: "auto",
+    // size
     width: open ? sideBarWidth : 0,
-    overflow: "hidden",
+    height: "100vh",
     // color
     backgroundColor: theme.palette.grey[100],
     // transition
@@ -32,8 +35,6 @@ const SidebarBox = styled(Box, {
         duration: theme.transitions.duration.standard,
         easing: theme.transitions.easing.sharp
     }) : "none",
-    // zIndex
-    elevation: theme.zIndex.drawer + 1,
 }))
 
 
@@ -80,11 +81,6 @@ export const Sidebar = ({children}) => {
                 <CloseIcon sx={{color: 'black', width: "1.25rem", height: "1.25rem"}}/>
             </IconButton>
             <Box sx={{
-                padding: "6rem 1.5rem"
-            }}>
-                {children}
-            </Box>
-            <Box sx={{
                 width: 10,
                 height: "100%",
                 cursor: "ew-resize",
@@ -96,6 +92,14 @@ export const Sidebar = ({children}) => {
                 dispatch(setIsDragging(true))
             }}>
             </Box>
+            <Box sx={{
+                padding: "6rem 1.5rem",
+                display: "flex",
+                flexDirection: "column",
+                gap: "1rem"
+            }}>
+                {children}
+            </Box>
         </SidebarBox>
     )
 }
@@ -106,24 +110,20 @@ const MainContentBox = styled(Box, {
     }
 })(({theme, open, sideBarWidth, transitionEnabled}) => ({
     // size
+    flexBasis: "100px",
+    flexGrow: 1,
+    flexShrink: 1,
+    // color
     color: "rgb(49, 51, 63)",
-    minHeight: "100vh",
-    overflow: "hidden",
-    marginLeft: open ? sideBarWidth : 0,
-    // transition
-    transition: transitionEnabled ? theme.transitions.create(['margin-left'], {
-        duration: theme.transitions.duration.standard,
-        easing: theme.transitions.easing.sharp
-    }) : "none",
+    // size
+    height: "100vh",
 }))
 
 export const MainContent = ({children}) => {
     const isOpen = useSelector(state => state.open);
-    const sideBarWidth = useSelector(state => state.sideBarWidth);
-    const transitionEnabled = useSelector(state => state.transitionEnabled);
     const dispatch = useDispatch()
     return (
-        <MainContentBox open={isOpen} sideBarWidth={sideBarWidth} transitionEnabled={transitionEnabled}>
+        <MainContentBox open={isOpen}>
             <IconButton
                 onClick={() => {
                     dispatch(setOpen(!isOpen))
