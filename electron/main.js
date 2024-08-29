@@ -4,8 +4,8 @@ const { exec } = require('child_process'); // 确保
 
 function createWindow() {
     const win = new BrowserWindow({
-        width: 800,
-        height: 600,
+        width: 1100,
+        height: 700,
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
             nodeIntegration: false, // 推荐使用预加载脚本来处理ipc通信
