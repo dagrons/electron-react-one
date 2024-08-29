@@ -1,7 +1,7 @@
 import {Box} from "@mui/material";
 import styled from "@emotion/styled";
 
-const MainContentBox = styled(Box)(({children}) => (
+const MainContentItemBox = styled(Box)(({children}) => (
     {
         width: "100%",
         maxWidth: "46rem",
@@ -10,4 +10,4 @@ const MainContentBox = styled(Box)(({children}) => (
     }
 ))
 
-export default MainContentBox;
+export default MainContentItemBox;

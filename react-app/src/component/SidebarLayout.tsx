@@ -26,13 +26,15 @@ const SidebarBox = styled(Box, {
     // overflowX
     overflowY: "auto",
     // size
-    width: open ? sideBarWidth : 0,
+    width: sideBarWidth,
     height: "100vh",
     maxWidth: "550px",
     // color
     backgroundColor: theme.palette.grey[100],
+    // transform
+    transform: open ? "translateX(0)" : `translateX(-100%)`,
     // transition
-    transition: transitionEnabled ? theme.transitions.create(['width'], {
+    transition: transitionEnabled ? theme.transitions.create(['width', 'transform'], {
         duration: theme.transitions.duration.standard,
         easing: theme.transitions.easing.sharp
     }) : "none",
@@ -107,39 +109,48 @@ export const Sidebar = ({children}) => {
 
 const MainContentBox = styled(Box, {
     shouldForwardProp(propName) {
-        return !['theme', 'open', 'sideBarWidth', 'transitionEnabled'].includes(propName);
+        return !['theme', 'open', 'sideBarWidth'].includes(propName);
     }
-})(({theme, open, sideBarWidth, transitionEnabled}) => ({
-    // size
-    flexBasis: "100px",
-    flexGrow: 1,
-    flexShrink: 1,
-    // color
-    color: "rgb(49, 51, 63)",
-    // size
-    height: "100vh",
-}))
+})(({theme, open, sideBarWidth}) => {
+    console.log(sideBarWidth);
+    return {
+        // size
+        flexBasis: "100px",
+        flexGrow: 1,
+        flexShrink: 1,
+        // color
+        color: "rgb(49, 51, 63)",
+        // size
+        height: "100vh",
+        marginLeft: open ? 0 : -sideBarWidth,
+        transition: theme.transitions.create(['margin-left'], {
+            duration: theme.transitions.duration.standard,
+            easing: theme.transitions.easing.sharp
+        })
+    }
+})
 
 export const MainContent = ({children}) => {
     const isOpen = useSelector(state => state.open);
+    const sideBarWidth = useSelector(state => state.sideBarWidth);
     const dispatch = useDispatch()
     return (
-        <MainContentBox open={isOpen}>
-            <IconButton
-                onClick={() => {
-                    dispatch(setOpen(!isOpen))
-                }}
-                sx={{
-                    padding: 1.5,
-                    position: "absolute",
-                    top: "0.375rem",
-                    left: "0.25rem+25%",
-                }}
-            >
-                {
-                    !isOpen && <MenuIcon sx={{color: 'black', width: "1.25rem", height: "1.25rem"}}/>
-                }
-            </IconButton>
+        <MainContentBox open={isOpen} sideBarWidth={sideBarWidth}>
+            {
+                !isOpen && <IconButton
+                    onClick={() => {
+                        dispatch(setOpen(!isOpen))
+                    }}
+                    sx={{
+                        padding: 1.5,
+                        position: "absolute",
+                        top: "0.375rem",
+                        left: "0.25rem+25%",
+                    }}
+                >
+                    <MenuIcon sx={{color: 'black', width: "1.25rem", height: "1.25rem"}}/>
+                </IconButton>
+            }
             <Box sx={{
                 // display
                 display: "flex",

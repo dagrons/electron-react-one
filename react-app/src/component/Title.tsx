@@ -1,9 +1,9 @@
 import {Typography} from "@mui/material";
-import MainContentBox from "./MainContentBox.tsx";
+import MainContentItemBox from "./MainContentItemBox.tsx";
 
 const Title = ({children}) => {
     return (
-        <MainContentBox sx={{
+        <MainContentItemBox sx={{
             paddingTop: "6rem"
         }}>
             <Typography sx={{
@@ -12,7 +12,7 @@ const Title = ({children}) => {
             }}>
                 {children}
             </Typography>
-        </MainContentBox>
+        </MainContentItemBox>
     )
 }
 
