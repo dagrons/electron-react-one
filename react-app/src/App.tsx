@@ -1,11 +1,13 @@
-import {Box, Button, createTheme, Stack, ThemeProvider} from '@mui/material';
-import {MainContent, Sidebar} from "./component/SideBarLayout.tsx";
+import {Box, createTheme, ThemeProvider} from '@mui/material';
+import {MainContent, Sidebar} from "./component/SidebarLayout.tsx";
 import logoImage from './assets/logo.png';
 import {Provider} from "react-redux";
 import store from "./store/store.ts";
-import {BrowserRouter as Router, Route, Routes, Link} from "react-router-dom"
-import Home from "./page/Home.ts";
-import About from "./page/About.ts";
+import {BrowserRouter as Router, Route, Routes} from "react-router-dom"
+import About from "./page/About.tsx";
+import OSToolPage from "./page/OSToolPage.tsx"
+import QAPage from "./page/QAPage.tsx"
+import SideBarMenuButton from "./component/SidebarMenuButton.tsx";
 
 
 const theme = createTheme()
@@ -28,17 +30,25 @@ function App() {
                                 flexGrow: 1,
                                 flexShrink: 1
                             }} src={logoImage} alt="Your image description"/>
-                            <Button sx={{display: "block"}} component={Link} to="/" variant="contained" color="secondary">
-                                Home
-                            </Button>
-                            <Button sx={{display: "block"}} component={Link} to="/about" variant="outlined"
-                                    color="secondary">
-                                About
-                            </Button>
+                            <Box sx={{
+                                // size
+                                padding: "1rem",
+                                borderRadius: ".5rem",
+                                // display
+                                display: "flex",
+                                flexDirection: "column",
+                                gap: ".5rem",
+                                // color
+                                backgroundColor: "white",
+                            }}>
+                                <SideBarMenuButton to={"/"}>自动化终端运维</SideBarMenuButton>
+                                <SideBarMenuButton to={"/qa"}>QA问答</SideBarMenuButton>
+                            </Box>
                         </Sidebar>
                         <MainContent>
                             <Routes>
-                                <Route path='/' element={<Home/>}/>
+                                <Route path='/' element={<OSToolPage/>}/>
+                                <Route path='/qa' element={<QAPage/>}/>
                                 <Route path='/about' element={<About/>}/>
                             </Routes>
                         </MainContent>
@@ -46,7 +56,7 @@ function App() {
                 </Router>
             </ThemeProvider>
         </Provider>
-)
+    )
 }
 
 export default App;

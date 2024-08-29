@@ -28,6 +28,7 @@ const SidebarBox = styled(Box, {
     // size
     width: open ? sideBarWidth : 0,
     height: "100vh",
+    maxWidth: "550px",
     // color
     backgroundColor: theme.palette.grey[100],
     // transition
@@ -139,7 +140,14 @@ export const MainContent = ({children}) => {
                     !isOpen && <MenuIcon sx={{color: 'black', width: "1.25rem", height: "1.25rem"}}/>
                 }
             </IconButton>
-            {children}
+            <Box sx={{
+                // display
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+            }}>
+                {children}
+            </Box>
         </MainContentBox>
     )
 }
