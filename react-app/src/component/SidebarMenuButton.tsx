@@ -1,7 +1,21 @@
 import {Link, useLocation} from "react-router-dom";
-import {Button, Typography} from "@mui/material";
+import {Box, Button, Typography} from "@mui/material";
 
-const SideBarMenuButton = ({children, to}) => {
+export const SidebarMenu = ({children}) => {
+    return (
+        <Box sx={{
+            // size
+            padding: "1rem",
+            borderRadius: ".5rem",
+            // display
+            display: "flex",
+            flexDirection: "column",
+            gap: ".5rem",
+            // color
+            backgroundColor: "white",
+        }}>{children}</Box>)
+}
+export const SideBarMenuButton = ({children, to}) => {
     const location = useLocation()
     return (
         <Button sx={{
@@ -22,4 +36,3 @@ const SideBarMenuButton = ({children, to}) => {
 }
 
 
-export default SideBarMenuButton;

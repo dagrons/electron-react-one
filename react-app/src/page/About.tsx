@@ -1,8 +1,14 @@
 
-const AboutPage = () => {
+export const AboutPage = () => {
     return (
         "AboutPage"
     )
 }
 
-export default AboutPage;
+export const AboutPageSidebar = () => {
+    return (
+        "AboutSidebar"
+    )
+}
+
+
