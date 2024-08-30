@@ -19,35 +19,29 @@ function App() {
         <Provider store={store}>
             <ThemeProvider theme={theme}>
                 <Router>
-                    <Box sx={{
-                        width: "100%",
-                        display: "flex",
-                        justifyContent: "flex-start",
-                    }}>
-                        <Sidebar>
-                            <img style={{
-                                flexBasis: "100px",
-                                flexGrow: 1,
-                                flexShrink: 1
-                            }} src={logoImage} alt="Your image description"/>
-                            <SidebarMenu>
-                                <SideBarMenuButton to={"/"}>终端问题修复工具</SideBarMenuButton>
-                                <SideBarMenuButton to={"/qa"}>QA问答</SideBarMenuButton>
-                                <SideBarMenuButton to={"/about"}>Markdown</SideBarMenuButton>
-                            </SidebarMenu>
-                            <Routes>
-                                <Route path='/' element={<OSToolPageSidebar/>}/>
-                                <Route path='/qa' element={<QAPageSidebar/>}/>
-                            </Routes>
-                        </Sidebar>
-                        <MainContent>
-                            <Routes>
-                                <Route path='/' element={<OSToolPage/>}/>
-                                <Route path='/qa' element={<QAPage/>}/>
-                                <Route path='/about' element={<MarkdownPage />} />
-                            </Routes>
-                        </MainContent>
-                    </Box>
+                    <Sidebar>
+                        <img style={{
+                            flexBasis: "100px",
+                            flexGrow: 1,
+                            flexShrink: 1
+                        }} src={logoImage} alt="Your image description"/>
+                        <SidebarMenu>
+                            <SideBarMenuButton to={"/"}>终端问题修复工具</SideBarMenuButton>
+                            <SideBarMenuButton to={"/qa"}>QA问答</SideBarMenuButton>
+                            <SideBarMenuButton to={"/about"}>Markdown</SideBarMenuButton>
+                        </SidebarMenu>
+                        <Routes>
+                            <Route path='/' element={<OSToolPageSidebar/>}/>
+                            <Route path='/qa' element={<QAPageSidebar/>}/>
+                        </Routes>
+                    </Sidebar>
+                    <MainContent>
+                        <Routes>
+                            <Route path='/' element={<OSToolPage/>}/>
+                            <Route path='/qa' element={<QAPage/>}/>
+                            <Route path='/about' element={<MarkdownPage />} />
+                        </Routes>
+                    </MainContent>
                 </Router>
             </ThemeProvider>
         </Provider>

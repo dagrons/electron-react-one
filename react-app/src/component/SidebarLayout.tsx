@@ -111,12 +111,7 @@ const MainContentBox = styled(Box, {
         return !['theme', 'open', 'sideBarWidth'].includes(propName);
     }
 })(({theme, open, sideBarWidth, transitionEnabled}) => {
-    console.log(sideBarWidth);
     return {
-        // size
-        flexBasis: "100px",
-        flexGrow: 1,
-        flexShrink: 1,
         // color
         color: "rgb(49, 51, 63)",
         // size
