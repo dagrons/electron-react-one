@@ -28,7 +28,6 @@ const SidebarBox = styled(Box, {
     // size
     width: sideBarWidth,
     height: "100vh",
-    maxWidth: "550px",
     // color
     backgroundColor: theme.palette.grey[100],
     // transform
@@ -52,7 +51,7 @@ export const Sidebar = ({children}) => {
             if (isDragging) {
                 dispatch(setTransitionEnabled(false))
                 const newWidth = e.clientX;
-                if (newWidth > 210) {
+                if (newWidth > 210 && newWidth <550) {
                     dispatch(setSidebarWidth(newWidth))
                 }
             }
