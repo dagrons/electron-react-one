@@ -21,8 +21,15 @@ export const MarkdownPage = () => {
 - item1 
 - item2
 
+这是个链接[chagpt](https://chatgpt.com)
 
 这是普通文本。
+
+|技术|性能|
+|---|---|
+|react|好|
+|pyqt|差|
+
 `;
 
 

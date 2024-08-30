@@ -138,7 +138,7 @@ export const MainContent = ({children}) => {
                     }}
                     sx={{
                         padding: 1.5,
-                        position: "absolute",
+                        position: "fixed",
                         top: "0.375rem",
                         left: "0.25rem+25%",
                     }}
@@ -151,6 +151,8 @@ export const MainContent = ({children}) => {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
+                // size
+                paddingBottom: "1rem"
             }}>
                 {children}
             </Box>
