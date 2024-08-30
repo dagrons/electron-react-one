@@ -12,9 +12,14 @@ function createWindow() {
             contextIsolation: true,
         },
     });
-
-    win.loadFile("./dist/index.html/");
-    win.webContents.openDevTools()
+    if (process.env.ELECTRON_ENV == 'development') {
+        win.loadURL("http://localhost:5173");
+    } else if (process.env.ELECTRON_ENV == "one") {
+        win.loadURL("http://localhost:8501");
+    }
+    else {
+        win.loadFile("./dist/index.html/");
+    }
 }
 
 app.whenReady().then(() => {

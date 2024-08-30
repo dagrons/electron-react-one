@@ -2,7 +2,7 @@ import {createStore} from "redux";
 
 const sideBarState = {
     open: true,
-    sideBarWidth: 354,
+    sideBarWidth: 271,
     isDragging: false,
     transitionEnabled: true,
 }

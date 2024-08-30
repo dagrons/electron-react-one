@@ -1,5 +1,7 @@
 import {Link, useLocation} from "react-router-dom";
 import {Box, Button, Typography} from "@mui/material";
+import {faAngleRight} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 export const SidebarMenu = ({children}) => {
     return (
@@ -30,7 +32,10 @@ export const SideBarMenuButton = ({children, to}) => {
                 fontSize: "1rem",
                 fontWeight: 400,
                 fontFamily: "Avenir,Helvetica,Arial,sans-serif"
-            }}>{children}</Typography>
+            }}>
+                <FontAwesomeIcon style={{marginRight: ".5rem"}} icon={faAngleRight}/>
+                {children}
+            </Typography>
         </Button>
     )
 }

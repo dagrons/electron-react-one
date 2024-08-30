@@ -20,7 +20,7 @@ const SidebarBox = styled(Box, {
     }
 })(({theme, open, sideBarWidth, transitionEnabled}) => ({
     // position
-    position: "relative",
+    position: "fixed",
     // color
     color: "rgb(49, 51, 63)",
     // overflowX
@@ -110,7 +110,7 @@ const MainContentBox = styled(Box, {
     shouldForwardProp(propName) {
         return !['theme', 'open', 'sideBarWidth'].includes(propName);
     }
-})(({theme, open, sideBarWidth}) => {
+})(({theme, open, sideBarWidth, transitionEnabled}) => {
     console.log(sideBarWidth);
     return {
         // size
@@ -121,20 +121,21 @@ const MainContentBox = styled(Box, {
         color: "rgb(49, 51, 63)",
         // size
         height: "100vh",
-        marginLeft: open ? 0 : -sideBarWidth,
-        transition: theme.transitions.create(['margin-left'], {
+        marginLeft: open ? sideBarWidth : 0,
+        transition: transitionEnabled? theme.transitions.create(['margin-left'], {
             duration: theme.transitions.duration.standard,
             easing: theme.transitions.easing.sharp
-        })
+        }) : "none",
     }
 })
 
 export const MainContent = ({children}) => {
     const isOpen = useSelector(state => state.open);
     const sideBarWidth = useSelector(state => state.sideBarWidth);
+    const transitionEnabled = useSelector(state => state.transitionEnabled);
     const dispatch = useDispatch()
     return (
-        <MainContentBox open={isOpen} sideBarWidth={sideBarWidth}>
+        <MainContentBox open={isOpen} sideBarWidth={sideBarWidth} transitionEnabled={transitionEnabled}>
             {
                 !isOpen && <IconButton
                     onClick={() => {

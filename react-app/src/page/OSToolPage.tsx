@@ -1,8 +1,12 @@
 import Title from "../component/Title.tsx";
+import {faWrench} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 export const OSToolPage = () => {
     return (
-        <Title>自动化终端运维</Title>
+        <>
+            <Title><FontAwesomeIcon style={{marginRight: ".5rem"}} icon={faWrench}/>终端问题修复工具</Title>
+        </>
     )
 }
 
