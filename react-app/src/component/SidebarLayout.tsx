@@ -108,7 +108,7 @@ export const Sidebar = ({children}) => {
 
 const MainContentBox = styled(Box, {
     shouldForwardProp(propName) {
-        return !['theme', 'open', 'sideBarWidth'].includes(propName);
+        return !['theme', 'open', 'sideBarWidth', 'transitionEnabled'].includes(propName);
     }
 })(({theme, open, sideBarWidth, transitionEnabled}) => {
     return {

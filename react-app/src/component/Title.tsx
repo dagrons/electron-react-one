@@ -1,6 +1,7 @@
 import {Typography} from "@mui/material";
 import MainContentItemBox from "./MainContentItemBox.tsx";
 
+
 const Title = ({children}) => {
     return (
         <MainContentItemBox sx={{

@@ -2,6 +2,8 @@ import Markdown from "react-markdown";
 import MainContentItemBox from "../component/MainContentItemBox.tsx";
 import Title from "../component/Title.tsx";
 import remarkGfm from "remark-gfm";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faMarkdown} from "@fortawesome/free-brands-svg-icons";
 
 export const MarkdownPage = () => {
     const markdown = `
@@ -25,6 +27,7 @@ export const MarkdownPage = () => {
 
 这是普通文本。
 
+这是表格
 |技术|性能|
 |---|---|
 |react|好|
@@ -36,6 +39,7 @@ export const MarkdownPage = () => {
     return (
         <>
             <Title>
+                <FontAwesomeIcon style={{marginRight: ".5rem"}} icon={faMarkdown}/>
                 MD语法
             </Title>
             <MainContentItemBox>

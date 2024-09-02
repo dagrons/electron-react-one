@@ -28,7 +28,7 @@ function App() {
                         <SidebarMenu>
                             <SideBarMenuButton to={"/"}>终端问题修复工具</SideBarMenuButton>
                             <SideBarMenuButton to={"/qa"}>QA问答</SideBarMenuButton>
-                            <SideBarMenuButton to={"/about"}>Markdown</SideBarMenuButton>
+                            <SideBarMenuButton to={"/md"}>Markdown</SideBarMenuButton>
                         </SidebarMenu>
                         <Routes>
                             <Route path='/' element={<OSToolPageSidebar/>}/>
@@ -39,7 +39,7 @@ function App() {
                         <Routes>
                             <Route path='/' element={<OSToolPage/>}/>
                             <Route path='/qa' element={<QAPage/>}/>
-                            <Route path='/about' element={<MarkdownPage />} />
+                            <Route path='/md' element={<MarkdownPage />} />
                         </Routes>
                     </MainContent>
                 </Router>
