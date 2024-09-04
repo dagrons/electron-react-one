@@ -1,6 +1,6 @@
-import {Box, createTheme, ThemeProvider} from '@mui/material';
+import {createTheme, ThemeProvider} from '@mui/material';
 import {MainContent, Sidebar} from "./component/SidebarLayout.tsx";
-import logoImage from './assets/logo.png';
+import logoImage from './assets/nyan-cat.png';
 import {Provider} from "react-redux";
 import store from "./store/store.ts";
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom"
