@@ -7,7 +7,7 @@ import {BrowserRouter as Router, Route, Routes} from "react-router-dom"
 import {OSToolPage, OSToolPageSidebar} from "./page/OSToolPage.tsx"
 import {QAPage, QAPageSidebar} from "./page/QAPage.tsx"
 import {SidebarMenu, SideBarMenuButton} from "./component/SidebarMenuButton.tsx";
-import {MarkdownPage} from "./page/MarkdownPage.tsx";
+import {AboutPage} from "./page/AboutPage.tsx";
 import {theme} from "./theme.ts";
 
 
@@ -24,9 +24,8 @@ function App() {
                             flexShrink: 1
                         }} src={logoImage} alt="Your image description"/>
                         <SidebarMenu>
-                            <SideBarMenuButton to={"/"}>终端问题修复工具</SideBarMenuButton>
+                            <SideBarMenuButton to={"/"}>常见工具</SideBarMenuButton>
                             <SideBarMenuButton to={"/qa"}>QA问答</SideBarMenuButton>
-                            <SideBarMenuButton to={"/md"}>Markdown</SideBarMenuButton>
                         </SidebarMenu>
                         <Routes>
                             <Route path='/' element={<OSToolPageSidebar/>}/>
@@ -37,7 +36,6 @@ function App() {
                         <Routes>
                             <Route path='/' element={<OSToolPage/>}/>
                             <Route path='/qa' element={<QAPage/>}/>
-                            <Route path='/md' element={<MarkdownPage/>}/>
                         </Routes>
                     </MainContent>
                 </Router>

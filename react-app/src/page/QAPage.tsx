@@ -7,14 +7,13 @@ export const QAPage = (props) => {
     const theme = useTheme();
 
     return (
-
         <Title><FontAwesomeIcon style={{marginRight: theme.spacing(1)}} icon={faRobot}/>QA问答</Title>
     )
 }
 
 export const QAPageSidebar = () => {
     return (
-        "QAPageSidebar"
+        <></>
     )
 }
 

@@ -94,7 +94,7 @@ export const Sidebar = ({children}) => {
             }}>
             </Box>
             <Box sx={{
-                padding: theme.spacing(12, 3, 12, 3),
+                padding: theme.spacing(12, 3, 3, 3),
                 display: "flex",
                 flexDirection: "column",
                 gap: theme.spacing(0.5)

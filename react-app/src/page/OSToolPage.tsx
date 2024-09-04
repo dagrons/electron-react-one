@@ -7,14 +7,14 @@ export const OSToolPage = (props) => {
     const theme = useTheme()
     return (
         <>
-            <Title><FontAwesomeIcon style={{marginRight: theme.spacing(1)}} icon={faWrench}/>终端问题修复工具</Title>
+            <Title><FontAwesomeIcon style={{marginRight: theme.spacing(1)}} icon={faWrench}/>常见工具</Title>
         </>
     )
 }
 
 export const OSToolPageSidebar = () => {
     return (
-        "OSToolPageSidebar"
+        <></>
     )
 }
 
