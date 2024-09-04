@@ -1,4 +1,4 @@
-import {createTheme, ThemeProvider} from '@mui/material';
+import {ThemeProvider} from '@mui/material';
 import {MainContent, Sidebar} from "./component/SidebarLayout.tsx";
 import logoImage from './assets/nyan-cat.png';
 import {Provider} from "react-redux";
@@ -8,9 +8,7 @@ import {OSToolPage, OSToolPageSidebar} from "./page/OSToolPage.tsx"
 import {QAPage, QAPageSidebar} from "./page/QAPage.tsx"
 import {SidebarMenu, SideBarMenuButton} from "./component/SidebarMenuButton.tsx";
 import {MarkdownPage} from "./page/MarkdownPage.tsx";
-
-
-const theme = createTheme()
+import {theme} from "./theme.ts";
 
 
 function App() {
@@ -39,7 +37,7 @@ function App() {
                         <Routes>
                             <Route path='/' element={<OSToolPage/>}/>
                             <Route path='/qa' element={<QAPage/>}/>
-                            <Route path='/md' element={<MarkdownPage />} />
+                            <Route path='/md' element={<MarkdownPage/>}/>
                         </Routes>
                     </MainContent>
                 </Router>

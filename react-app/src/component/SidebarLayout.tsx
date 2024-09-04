@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import {Box, IconButton} from "@mui/material";
+import {Box, IconButton, useTheme} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import MenuIcon from '@mui/icons-material/Menu';
 import {useEffect} from "react";
@@ -21,8 +21,6 @@ const SidebarBox = styled(Box, {
 })(({theme, open, sideBarWidth, transitionEnabled}) => ({
     // position
     position: "fixed",
-    // color
-    color: "rgb(49, 51, 63)",
     // overflowX
     overflowY: "auto",
     // size
@@ -41,6 +39,7 @@ const SidebarBox = styled(Box, {
 
 
 export const Sidebar = ({children}) => {
+    const theme = useTheme();
     const isOpen = useSelector(state => state.open);
     const sideBarWidth = useSelector(state => state.sideBarWidth);
     const isDragging = useSelector(state => state.isDragging);
@@ -74,10 +73,10 @@ export const Sidebar = ({children}) => {
                     dispatch(setOpen(!isOpen))
                 }}
                 sx={{
-                    padding: 1.5,
+                    padding: theme.spacing(2),
                     position: "absolute",
-                    top: "0.375rem",
-                    right: "0.25rem",
+                    top: theme.spacing(0.5),
+                    right: theme.spacing(0.5)
                 }}
             >
                 <CloseIcon sx={{color: 'black', width: "1.25rem", height: "1.25rem"}}/>
@@ -95,10 +94,10 @@ export const Sidebar = ({children}) => {
             }}>
             </Box>
             <Box sx={{
-                padding: "6rem 1.5rem",
+                padding: theme.spacing(12, 3, 12, 3),
                 display: "flex",
                 flexDirection: "column",
-                gap: "1rem"
+                gap: theme.spacing(0.5)
             }}>
                 {children}
             </Box>
@@ -112,8 +111,8 @@ const MainContentBox = styled(Box, {
     }
 })(({theme, open, sideBarWidth, transitionEnabled}) => {
     return {
-        // color
-        color: "rgb(49, 51, 63)",
+        // display
+        position: "relative",
         // size
         height: "100vh",
         marginLeft: open ? sideBarWidth : 0,
@@ -125,6 +124,7 @@ const MainContentBox = styled(Box, {
 })
 
 export const MainContent = ({children}) => {
+    const theme = useTheme();
     const isOpen = useSelector(state => state.open);
     const sideBarWidth = useSelector(state => state.sideBarWidth);
     const transitionEnabled = useSelector(state => state.transitionEnabled);
@@ -137,10 +137,10 @@ export const MainContent = ({children}) => {
                         dispatch(setOpen(!isOpen))
                     }}
                     sx={{
-                        padding: 1.5,
-                        position: "fixed",
-                        top: "0.375rem",
-                        left: "0.25rem+25%",
+                        padding: theme.spacing(2),
+                        position: "absolute",
+                        top: theme.spacing(0.5),
+                        left: theme.spacing(0.5),
                     }}
                 >
                     <MenuIcon sx={{color: 'black', width: "1.25rem", height: "1.25rem"}}/>
@@ -152,7 +152,7 @@ export const MainContent = ({children}) => {
                 flexDirection: "column",
                 alignItems: "center",
                 // size
-                paddingBottom: "1rem"
+                paddingBottom: theme.spacing(2)
             }}>
                 {children}
             </Box>

@@ -1,12 +1,12 @@
 import {Box} from "@mui/material";
 import styled from "@emotion/styled";
 
-const MainContentItemBox = styled(Box)(({children}) => (
+const MainContentItemBox = styled(Box)(({theme}) => (
     {
         width: "100%",
         maxWidth: "46rem",
-        paddingLeft: "1rem",
-        paddingRight: "1rem",
+        paddingLeft: theme.spacing(2),
+        paddingRight: theme.spacing(2),
     }
 ))
 

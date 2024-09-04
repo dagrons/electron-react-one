@@ -1,16 +1,14 @@
-import {Typography} from "@mui/material";
+import {Typography, useTheme} from "@mui/material";
 import MainContentItemBox from "./MainContentItemBox.tsx";
 
 
 const Title = ({children}) => {
+    const theme = useTheme();
     return (
         <MainContentItemBox sx={{
-            paddingTop: "6rem"
+            paddingTop: theme.spacing(12)
         }}>
-            <Typography sx={{
-                fontSize: "2.75rem",
-                fontWeight: "bold",
-            }}>
+            <Typography variant={"h1"}>
                 {children}
             </Typography>
         </MainContentItemBox>
