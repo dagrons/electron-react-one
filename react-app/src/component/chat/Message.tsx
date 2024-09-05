@@ -6,6 +6,7 @@ import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import rehypeHighlight from "rehype-highlight";
 import rehypeRaw from "rehype-raw";
+import 'highlight.js/styles/atom-one-dark.css';
 
 
 export const Message = ({content, role}) => {
@@ -15,7 +16,9 @@ export const Message = ({content, role}) => {
         remarkGfm
     ]
     const rehypePlugins = [
-        rehypeKatex
+        rehypeKatex,
+        rehypeHighlight,
+        rehypeRaw
     ]
 
     return (
@@ -48,7 +51,7 @@ export const Message = ({content, role}) => {
             }}>
                 <Markdown
                     remarkPlugins={remarkPlugins}
-                    rehypePlugins={[...rehypePlugins, [rehypeHighlight, rehypeRaw, {detect: true}]]}>
+                    rehypePlugins={rehypePlugins}>
                     {content}
                 </Markdown>
             </Box>
