@@ -6,6 +6,7 @@ import {ChatInput} from "../component/chat/ChatInput.tsx";
 import MainContentItemBox from "../component/MainContentItemBox.tsx";
 import {Message} from "../component/chat/Message.tsx";
 import {useDispatch, useSelector} from "react-redux";
+import {useRef} from "react";
 
 const setChatInput = (chatInput) => ({type: "SET_CHATINPUT", chatInput: chatInput});
 const addChatHistory = (role, content) => ({type: "ADD_CHATHISTORY", role: role, content: content});
@@ -18,7 +19,8 @@ export const QAPage = () => {
     const chatInput = useSelector(state => state.chatInput);
     const chatHistory = useSelector(state => state.chatHistory);
     const dispatch = useDispatch();
-    let lastMessage = chatInput;
+    const chatHistoryBoxRef = useRef(null)
+
 
     const handleKeyDown = (event) => {
         if (event.key === "Enter" && !event.shiftKey) {
@@ -28,6 +30,12 @@ export const QAPage = () => {
             } else {
                 dispatch(addChatHistory("user", chatInput));
                 dispatch(addChatHistory("assistant", chatInput));
+                // 等待React渲染完成后滚动到最底部
+                setTimeout(() => {
+                    if (chatHistoryBoxRef.current) {
+                        chatHistoryBoxRef.current.scrollTop = chatHistoryBoxRef.current.scrollHeight;
+                    }
+                }, 0);
             }
             dispatch(setChatInput(''))
         }
@@ -40,7 +48,7 @@ export const QAPage = () => {
     return (
         <>
             <Title><FontAwesomeIcon style={{marginRight: theme.spacing(1)}} icon={faRobot}/>QA问答</Title>
-            <MainContentItemBox sx={{
+            <MainContentItemBox ref={chatHistoryBoxRef} sx={{
                 flexGrow: 1,
                 overflowY: "scroll",
                 display: "flex",
