@@ -11,7 +11,6 @@ import {useRef} from "react";
 const setChatInput = (chatInput) => ({type: "SET_CHATINPUT", chatInput: chatInput});
 const addChatHistory = (role, content) => ({type: "ADD_CHATHISTORY", role: role, content: content});
 const clearChatHistory = () => ({type: "CLEAR_CHATHISTORY"})
-const updateLastMessage = (role, content) => ({type: "UPDATE_LAST_MESSAGE", role: role, content: content});
 
 export const QAPage = () => {
     const theme = useTheme();

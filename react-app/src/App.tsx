@@ -23,18 +23,15 @@ function App() {
                             flexShrink: 1
                         }} src={logoImage} alt="Your image description"/>
                         <SidebarMenu>
-                            <SideBarMenuButton to={"/"}>常见工具</SideBarMenuButton>
-                            <SideBarMenuButton to={"/qa"}>QA问答</SideBarMenuButton>
+                            <SideBarMenuButton to={"/"}>QA问答</SideBarMenuButton>
                         </SidebarMenu>
                         <Routes>
-                            <Route path='/' element={<OSToolPageSidebar/>}/>
-                            <Route path='/qa' element={<QAPageSidebar/>}/>
+                            <Route path='/' element={<QAPageSidebar/>}/>
                         </Routes>
                     </Sidebar>
                     <MainContent>
                         <Routes>
-                            <Route path='/' element={<OSToolPage/>}/>
-                            <Route path='/qa' element={<QAPage/>}/>
+                            <Route path='/' element={<QAPage/>}/>
                         </Routes>
                     </MainContent>
                 </Router>
