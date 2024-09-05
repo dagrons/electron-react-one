@@ -8,7 +8,6 @@ import {OSToolPage, OSToolPageSidebar} from "./page/OSToolPage.tsx"
 import {QAPage, QAPageSidebar} from "./page/QAPage.tsx"
 import {SidebarMenu, SideBarMenuButton} from "./component/SidebarMenuButton.tsx";
 import {theme} from "./theme.ts";
-import {COMPage} from "./page/COMPage.tsx";
 
 
 function App() {
@@ -26,7 +25,6 @@ function App() {
                         <SidebarMenu>
                             <SideBarMenuButton to={"/"}>常见工具</SideBarMenuButton>
                             <SideBarMenuButton to={"/qa"}>QA问答</SideBarMenuButton>
-                            <SideBarMenuButton to={"/com"}>组件市场</SideBarMenuButton>
                         </SidebarMenu>
                         <Routes>
                             <Route path='/' element={<OSToolPageSidebar/>}/>
@@ -37,7 +35,6 @@ function App() {
                         <Routes>
                             <Route path='/' element={<OSToolPage/>}/>
                             <Route path='/qa' element={<QAPage/>}/>
-                            <Route path={"/com"} element={<COMPage/>}/>
                         </Routes>
                     </MainContent>
                 </Router>

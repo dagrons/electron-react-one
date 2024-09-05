@@ -1,22 +1,15 @@
-import {createStore} from "redux";
+import {combineReducers, createStore} from "redux";
+import {sideBarReducer} from "./sidebar.ts";
+import {chatInputReducer} from "./chatInput.ts";
+import {chatHistoryReducer} from "./chatHistory.ts";
 
-const sideBarState = {
-    open: true,
-    sideBarWidth: 271,
-    isDragging: false,
-    transitionEnabled: true,
-}
 
-const sideBarReducer = (state=sideBarState, action) => {
-    switch(action.type) {
-        case 'SET_OPEN': return {...state, open: action.open};
-        case 'SET_SIDEBAR_WIDTH': return {...state, sideBarWidth: action.sideBarWidth};
-        case 'SET_IS_DRAGGING': return {...state, isDragging: action.isDragging};
-        case 'SET_TRANSITION_ENABLED': return {...state, transitionEnabled: action.transitionEnabled};
-        default: return state
-    }
-}
+const reducer = combineReducers({
+    sidebar: sideBarReducer,
+    chatInput: chatInputReducer,
+    chatHistory: chatHistoryReducer
+})
 
-const store = createStore(sideBarReducer)
+const store = createStore(reducer)
 
 export default store;

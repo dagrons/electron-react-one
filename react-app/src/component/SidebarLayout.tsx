@@ -40,10 +40,10 @@ const SidebarBox = styled(Box, {
 
 export const Sidebar = ({children}) => {
     const theme = useTheme();
-    const isOpen = useSelector(state => state.open);
-    const sideBarWidth = useSelector(state => state.sideBarWidth);
-    const isDragging = useSelector(state => state.isDragging);
-    const transitionEnabled = useSelector(state => state.transitionEnabled);
+    const isOpen = useSelector(state => state.sidebar.open);
+    const sideBarWidth = useSelector(state => state.sidebar.sideBarWidth);
+    const isDragging = useSelector(state => state.sidebar.isDragging);
+    const transitionEnabled = useSelector(state => state.sidebar.transitionEnabled);
     const dispatch = useDispatch()
     useEffect(() => {
         const handleMouseMove = (e) => {
@@ -125,9 +125,9 @@ const MainContentBox = styled(Box, {
 
 export const MainContent = ({children}) => {
     const theme = useTheme();
-    const isOpen = useSelector(state => state.open);
-    const sideBarWidth = useSelector(state => state.sideBarWidth);
-    const transitionEnabled = useSelector(state => state.transitionEnabled);
+    const isOpen = useSelector(state => state.sidebar.open);
+    const sideBarWidth = useSelector(state => state.sidebar.sideBarWidth);
+    const transitionEnabled = useSelector(state => state.sidebar.transitionEnabled);
     const dispatch = useDispatch()
     return (
         <MainContentBox open={isOpen} sideBarWidth={sideBarWidth} transitionEnabled={transitionEnabled}>
@@ -149,10 +149,10 @@ export const MainContent = ({children}) => {
             <Box sx={{
                 // display
                 display: "flex",
+                gap: theme.spacing(2),
                 flexDirection: "column",
                 alignItems: "center",
-                // size
-                paddingBottom: theme.spacing(2)
+                height: "100%",
             }}>
                 {children}
             </Box>
