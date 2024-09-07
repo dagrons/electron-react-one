@@ -11,6 +11,7 @@ import {useRef} from "react";
 const setChatInput = (chatInput) => ({type: "SET_CHATINPUT", chatInput: chatInput});
 const addChatHistory = (role, content) => ({type: "ADD_CHATHISTORY", role: role, content: content});
 const clearChatHistory = () => ({type: "CLEAR_CHATHISTORY"})
+const updateLastMessage = (role, content) => ({type: "UPDATE_LAST_MESSAGE", role: role, content: content});
 
 export const QAPage = () => {
     const theme = useTheme();
@@ -18,8 +19,9 @@ export const QAPage = () => {
     const chatInput = useSelector(state => state.chatInput);
     const chatHistory = useSelector(state => state.chatHistory);
     const dispatch = useDispatch();
-    const chatHistoryBoxRef = useRef(null)
+    const chatHistoryBoxRef = useRef(null);
 
+    let lastMessage = "";
 
     const handleKeyDown = (event) => {
         if (event.key === "Enter" && !event.shiftKey) {
@@ -35,6 +37,11 @@ export const QAPage = () => {
                         chatHistoryBoxRef.current.scrollTop = chatHistoryBoxRef.current.scrollHeight;
                     }
                 }, 0);
+                lastMessage = chatInput;
+                setInterval(() => {
+                    lastMessage += " hello world";
+                    dispatch(updateLastMessage('assistant', lastMessage));
+                }, 100);
             }
             dispatch(setChatInput(''))
         }
@@ -52,7 +59,7 @@ export const QAPage = () => {
                 overflowY: "scroll",
                 display: "flex",
                 flexDirection: "column",
-                gap: "0.5rem",
+                gap: "0.5rem"
             }}>
                 {
                     chatHistory.map((item, index) => (
