@@ -7,7 +7,7 @@ export const chatHistoryReducer = (state = chatHistory, action) => {
         case "CLEAR_CHATHISTORY":
             return [];
         case "UPDATE_LAST_MESSAGE":
-            return [...state.slice(0, state.length-1), [action.role, action.content]]
+            return [...state.slice(0, state.length - 1), [action.role, action.content]]
         default:
             return state
     }
@@ -27,11 +27,21 @@ export const chatInputReducer = (state = chatInput, action) => {
 
 const isGenerating = false;
 
-export const isGeneratingReducer = (state=isGenerating, action) => {
+export const isGeneratingReducer = (state = isGenerating, action) => {
     switch (action.type) {
         case "SET_ISGENERATING":
             return action.isGenerating;
         default:
-            return isGenerating;
+            return state;
+    }
+}
+
+const chatInputDisabled = false;
+export const chatInputDisabledReducer = (state = chatInputDisabled, action) => {
+    switch (action.type) {
+        case "SET_CHATINPUTDISABLED":
+            return action.chatInputDisabled;
+        default:
+            return state
     }
 }

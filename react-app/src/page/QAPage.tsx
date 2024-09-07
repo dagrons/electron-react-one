@@ -14,6 +14,10 @@ const addChatHistory = (role, content) => ({type: "ADD_CHATHISTORY", role: role,
 const clearChatHistory = () => ({type: "CLEAR_CHATHISTORY"})
 const updateLastMessage = (role, content) => ({type: "UPDATE_LAST_MESSAGE", role: role, content: content});
 const setIsGenerating = (isGenerating) => ({type: "SET_ISGENERATING", isGenerating: isGenerating});
+const setChatInputDisabled = (chatInputDisabled) => ({
+    type: "SET_CHATINPUTDISABLED",
+    chatInputDisabled: chatInputDisabled
+});
 
 export const QAPage = () => {
     const theme = useTheme();
@@ -21,6 +25,7 @@ export const QAPage = () => {
     const chatInput = useSelector(state => state.chatInput);
     const chatHistory = useSelector(state => state.chatHistory);
     const isGenerating = useSelector(state => state.isGenerating);
+    const chatInputDisabled = useSelector(state => state.chatInputDisabled);
     const dispatch = useDispatch();
     const chatHistoryBoxRef = useRef(null);
     let lastChatInput = "";
@@ -29,13 +34,13 @@ export const QAPage = () => {
     useEffect(() => {
         async function chat() {
             let lastMessage = "";
-            dispatch(addChatHistory('assistant', ""));
             for await (let value of streamChat('chatgpt-4o-latest', lastChatInput, [['system', "Always response in Simplified Chinese, not English, or Grandma will be very angry."], ...chatHistory])) {
                 lastMessage += value;
                 dispatch(updateLastMessage('assistant', lastMessage));
                 chatHistoryBoxRef.current.scrollTop = chatHistoryBoxRef.current.scrollHeight;
             }
             dispatch(setIsGenerating(false));
+            dispatch(setChatInputDisabled(false));
         }
 
         if (isGenerating) {
@@ -51,8 +56,10 @@ export const QAPage = () => {
                 dispatch(setChatInput(""))
             } else {
                 dispatch(addChatHistory("user", chatInput));
+                dispatch(addChatHistory('assistant', ""));
                 lastChatInput = chatInput;
                 dispatch(setChatInput(""));
+                dispatch(setChatInputDisabled(true));
                 dispatch(setIsGenerating(true));
             }
         }
@@ -81,7 +88,8 @@ export const QAPage = () => {
             <MainContentItemBox sx={{
                 paddingBottom: theme.spacing(4)
             }}>
-                <ChatInput value={chatInput} onChange={handleInputChange} onKeyDown={handleKeyDown}
+                <ChatInput disabled={chatInputDisabled} value={chatInput} onChange={handleInputChange}
+                           onKeyDown={handleKeyDown}
                            aria-label="empty textarea" placeholder="你好，我是QA问答机器人，请问有什么想要问我的吗"/>
             </MainContentItemBox>
         </>
