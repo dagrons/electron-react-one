@@ -6,44 +6,55 @@ import {ChatInput} from "../component/chat/ChatInput.tsx";
 import MainContentItemBox from "../component/MainContentItemBox.tsx";
 import {Message} from "../component/chat/Message.tsx";
 import {useDispatch, useSelector} from "react-redux";
-import {useRef} from "react";
+import {useEffect, useRef} from "react";
+import {streamChat} from "../api/chat.ts";
 
 const setChatInput = (chatInput) => ({type: "SET_CHATINPUT", chatInput: chatInput});
 const addChatHistory = (role, content) => ({type: "ADD_CHATHISTORY", role: role, content: content});
 const clearChatHistory = () => ({type: "CLEAR_CHATHISTORY"})
 const updateLastMessage = (role, content) => ({type: "UPDATE_LAST_MESSAGE", role: role, content: content});
+const setIsGenerating = (isGenerating) => ({type: "SET_ISGENERATING", isGenerating: isGenerating});
 
 export const QAPage = () => {
     const theme = useTheme();
 
     const chatInput = useSelector(state => state.chatInput);
     const chatHistory = useSelector(state => state.chatHistory);
+    const isGenerating = useSelector(state => state.isGenerating);
     const dispatch = useDispatch();
     const chatHistoryBoxRef = useRef(null);
+    let lastChatInput = "";
 
-    let lastMessage = "";
+
+    useEffect(() => {
+        async function chat() {
+            let lastMessage = "";
+            dispatch(addChatHistory('assistant', ""));
+            for await (let value of streamChat('gpt-4', lastChatInput, [['system', "Always response in Simplified Chinese, not English, or Grandma will be very angry."], ...chatHistory])) {
+                lastMessage += value;
+                dispatch(updateLastMessage('assistant', lastMessage));
+                chatHistoryBoxRef.current.scrollTop = chatHistoryBoxRef.current.scrollHeight;
+            }
+            dispatch(setIsGenerating(false));
+        }
+
+        if (isGenerating) {
+            chat()
+        }
+    }, [isGenerating]);
 
     const handleKeyDown = (event) => {
         if (event.key === "Enter" && !event.shiftKey) {
             event.preventDefault();
             if (chatInput === "clear") {
-                dispatch(clearChatHistory())
+                dispatch(clearChatHistory());
+                dispatch(setChatInput(""))
             } else {
                 dispatch(addChatHistory("user", chatInput));
-                dispatch(addChatHistory("assistant", chatInput));
-                // 等待React渲染完成后滚动到最底部
-                setTimeout(() => {
-                    if (chatHistoryBoxRef.current) {
-                        chatHistoryBoxRef.current.scrollTop = chatHistoryBoxRef.current.scrollHeight;
-                    }
-                }, 0);
-                lastMessage = chatInput;
-                setInterval(() => {
-                    lastMessage += " hello world";
-                    dispatch(updateLastMessage('assistant', lastMessage));
-                }, 100);
+                lastChatInput = chatInput;
+                dispatch(setChatInput(""));
+                dispatch(setIsGenerating(true));
             }
-            dispatch(setChatInput(''))
         }
     }
 
