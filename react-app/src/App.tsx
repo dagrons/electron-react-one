@@ -8,6 +8,7 @@ import {OSToolPage, OSToolPageSidebar} from "./page/OSToolPage.tsx"
 import {QAPage, QAPageSidebar} from "./page/QAPage.tsx"
 import {SidebarMenu, SideBarMenuButton} from "./component/SidebarMenuButton.tsx";
 import {theme} from "./theme.ts";
+import {AboutPage} from "./page/About.tsx";
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
                         }} src={logoImage} alt="Your image description"/>
                         <SidebarMenu>
                             <SideBarMenuButton to={"/"}>QA问答</SideBarMenuButton>
+                            <SideBarMenuButton to={"/about"}>关于</SideBarMenuButton>
                         </SidebarMenu>
                         <Routes>
                             <Route path='/' element={<QAPageSidebar/>}/>
@@ -32,6 +34,7 @@ function App() {
                     <MainContent>
                         <Routes>
                             <Route path='/' element={<QAPage/>}/>
+                            <Route path={"/about"} element={<AboutPage />} />
                         </Routes>
                     </MainContent>
                 </Router>
