@@ -1,16 +1,16 @@
 import {Box, useTheme} from "@mui/material";
-import Markdown from "react-markdown";
+import ReactMarkdown from "react-markdown";
 import './Message.css'
 import remarkGfm from 'remark-gfm';
-import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import rehypeHighlight from "rehype-highlight";
-import rehypeRaw from "rehype-raw";
+import remarkMath from "remark-math";
 import 'highlight.js/styles/atom-one-dark.css';
-
+import 'katex/dist/katex.min.css'
 
 export const Message = ({content, role}) => {
     const theme = useTheme();
+
     const remarkPlugins = [
         remarkMath,
         remarkGfm
@@ -18,7 +18,6 @@ export const Message = ({content, role}) => {
     const rehypePlugins = [
         rehypeKatex,
         rehypeHighlight,
-        rehypeRaw
     ]
 
     return (
@@ -49,11 +48,12 @@ export const Message = ({content, role}) => {
             <Box sx={{
                 flexGrow: 1
             }}>
-                <Markdown
+                <ReactMarkdown
                     remarkPlugins={remarkPlugins}
-                    rehypePlugins={rehypePlugins}>
+                    rehypePlugins={rehypePlugins}
+                >
                     {content}
-                </Markdown>
+                </ReactMarkdown>
             </Box>
         </Box>
     )
