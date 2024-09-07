@@ -30,7 +30,7 @@ export const QAPage = () => {
         async function chat() {
             let lastMessage = "";
             dispatch(addChatHistory('assistant', ""));
-            for await (let value of streamChat('gpt-4', lastChatInput, [['system', "Always response in Simplified Chinese, not English, or Grandma will be very angry."], ...chatHistory])) {
+            for await (let value of streamChat('chatgpt-4o-latest', lastChatInput, [['system', "Always response in Simplified Chinese, not English, or Grandma will be very angry."], ...chatHistory])) {
                 lastMessage += value;
                 dispatch(updateLastMessage('assistant', lastMessage));
                 chatHistoryBoxRef.current.scrollTop = chatHistoryBoxRef.current.scrollHeight;
