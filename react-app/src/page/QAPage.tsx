@@ -6,27 +6,28 @@ import {ChatInput} from "../component/chat/ChatInput.tsx";
 import MainContentItemBox from "../component/MainContentItemBox.tsx";
 import {Message} from "../component/chat/Message.tsx";
 import {useDispatch, useSelector} from "react-redux";
-import {useEffect, useRef} from "react";
+import {useEffect, useRef, useState} from "react";
 import {streamChat} from "../api/chat.ts";
 
-const setChatInput = (chatInput) => ({type: "SET_CHATINPUT", chatInput: chatInput});
+
 const addChatHistory = (role, content) => ({type: "ADD_CHATHISTORY", role: role, content: content});
 const clearChatHistory = () => ({type: "CLEAR_CHATHISTORY"})
 const updateLastMessage = (role, content) => ({type: "UPDATE_LAST_MESSAGE", role: role, content: content});
-const setIsGenerating = (isGenerating) => ({type: "SET_ISGENERATING", isGenerating: isGenerating});
-const setChatInputDisabled = (chatInputDisabled) => ({
-    type: "SET_CHATINPUTDISABLED",
-    chatInputDisabled: chatInputDisabled
-});
+
 
 export const QAPage = () => {
     const theme = useTheme();
 
-    const chatInput = useSelector(state => state.chatInput);
+    // store state
     const chatHistory = useSelector(state => state.chatHistory);
-    const isGenerating = useSelector(state => state.isGenerating);
-    const chatInputDisabled = useSelector(state => state.chatInputDisabled);
     const dispatch = useDispatch();
+
+    // page local state
+    const [chatInput, setChatInput] = useState('');
+    const [isGenerating, setIsGenerating] = useState(false);
+    const [chatInputDisabled, setChatInputDisabled] = useState(false);
+
+    // ref
     const chatHistoryBoxRef = useRef(null);
     let lastChatInput = "";
 
@@ -39,8 +40,8 @@ export const QAPage = () => {
                 dispatch(updateLastMessage('assistant', lastMessage));
                 chatHistoryBoxRef.current.scrollTop = chatHistoryBoxRef.current.scrollHeight;
             }
-            dispatch(setIsGenerating(false));
-            dispatch(setChatInputDisabled(false));
+            setIsGenerating(false);
+            setChatInputDisabled(false);
         }
 
         if (isGenerating) {
@@ -53,20 +54,20 @@ export const QAPage = () => {
             event.preventDefault();
             if (chatInput === "clear") {
                 dispatch(clearChatHistory());
-                dispatch(setChatInput(""))
+                setChatInput("")
             } else {
                 dispatch(addChatHistory("user", chatInput));
                 dispatch(addChatHistory('assistant', ""));
                 lastChatInput = chatInput;
-                dispatch(setChatInput(""));
-                dispatch(setChatInputDisabled(true));
-                dispatch(setIsGenerating(true));
+                setChatInput("");
+                setChatInputDisabled(true);
+                setIsGenerating(true)
             }
         }
     }
 
     const handleInputChange = (event) => {
-        dispatch(setChatInput(event.target.value));
+        setChatInput(event.target.value);
     }
 
     return (
