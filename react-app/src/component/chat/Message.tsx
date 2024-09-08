@@ -7,6 +7,7 @@ import rehypeHighlight from "rehype-highlight";
 import remarkMath from "remark-math";
 import 'highlight.js/styles/atom-one-dark.css';
 import 'katex/dist/katex.min.css'
+import rehypeRaw from "rehype-raw";
 
 export const Message = ({content, role}) => {
     const theme = useTheme();
@@ -18,6 +19,7 @@ export const Message = ({content, role}) => {
     const rehypePlugins = [
         rehypeKatex,
         rehypeHighlight,
+        rehypeRaw,
     ]
 
     return (
