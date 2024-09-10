@@ -45,20 +45,21 @@ export const Sidebar = ({children}) => {
     const isDragging = useSelector(state => state.sidebar.isDragging);
     const transitionEnabled = useSelector(state => state.sidebar.transitionEnabled);
     const dispatch = useDispatch()
-    useEffect(() => {
-        const handleMouseMove = (e) => {
-            if (isDragging) {
-                dispatch(setTransitionEnabled(false))
-                const newWidth = e.clientX;
-                if (newWidth > 210 && newWidth <550) {
-                    dispatch(setSidebarWidth(newWidth))
-                }
+    const handleMouseMove = (e) => {
+        if (isDragging) {
+            dispatch(setTransitionEnabled(false))
+            const newWidth = e.clientX;
+            if (newWidth > 210 && newWidth < 550) {
+                dispatch(setSidebarWidth(newWidth))
             }
         }
-        const handleMouseUp = (e) => {
-            dispatch(setIsDragging(false));
-            dispatch(setTransitionEnabled(true));
-        }
+    }
+    const handleMouseUp = (e) => {
+        dispatch(setIsDragging(false));
+        dispatch(setTransitionEnabled(true));
+    }
+
+    useEffect(() => {
         document.addEventListener("mousemove", handleMouseMove);
         document.addEventListener("mouseup", handleMouseUp);
         return () => {
@@ -116,7 +117,7 @@ const MainContentBox = styled(Box, {
         // size
         height: "100vh",
         marginLeft: open ? sideBarWidth : 0,
-        transition: transitionEnabled? theme.transitions.create(['margin-left'], {
+        transition: transitionEnabled ? theme.transitions.create(['margin-left'], {
             duration: theme.transitions.duration.standard,
             easing: theme.transitions.easing.sharp
         }) : "none",
