@@ -45,23 +45,23 @@ export const Sidebar = ({children}) => {
     const isDragging = useSelector(state => state.sidebar.isDragging);
     const transitionEnabled = useSelector(state => state.sidebar.transitionEnabled);
     const dispatch = useDispatch()
-    const handleMouseMove = (e) => {
-        if (isDragging) {
+
+    useEffect(() => {
+        const handleMouseMove = (e) => {
             dispatch(setTransitionEnabled(false))
             const newWidth = e.clientX;
             if (newWidth > 210 && newWidth < 550) {
                 dispatch(setSidebarWidth(newWidth))
             }
         }
-    }
-    const handleMouseUp = (e) => {
-        dispatch(setIsDragging(false));
-        dispatch(setTransitionEnabled(true));
-    }
-
-    useEffect(() => {
-        document.addEventListener("mousemove", handleMouseMove);
-        document.addEventListener("mouseup", handleMouseUp);
+        const handleMouseUp = (e) => {
+            dispatch(setIsDragging(false));
+            dispatch(setTransitionEnabled(true));
+        }
+        if (isDragging) {
+            document.addEventListener("mousemove", handleMouseMove);
+            document.addEventListener("mouseup", handleMouseUp);
+        }
         return () => {
             document.removeEventListener("mousemove", handleMouseMove);
             document.removeEventListener("mouseup", handleMouseUp);
