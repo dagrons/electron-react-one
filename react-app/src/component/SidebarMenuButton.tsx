@@ -1,10 +1,10 @@
 import {Link, useLocation} from "react-router-dom";
-import {Box, Button, Typography, useTheme} from "@mui/material";
+import {Box, Button, Theme, Typography, useTheme} from "@mui/material";
 import {faAngleRight} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import styled from "@emotion/styled";
 
-export const SidebarMenu = styled(Box)(({theme}) => (
+export const SidebarMenu = styled(Box)<{theme: Theme}>(({theme}) => (
     {
         // size
         padding: theme.spacing(2),

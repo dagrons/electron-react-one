@@ -8,8 +8,9 @@ import remarkMath from "remark-math";
 import 'highlight.js/styles/atom-one-dark.css';
 import 'katex/dist/katex.min.css'
 import rehypeRaw from "rehype-raw";
+import ChatMessage from "../../types/chat.ts";
 
-export const Message = ({content, role}) => {
+export const Message = ({message}: {message: ChatMessage}) => {
     const theme = useTheme();
 
     const remarkPlugins = [
@@ -26,7 +27,7 @@ export const Message = ({content, role}) => {
         <Box sx={{
             display: "flex",
             alignItems: "center",
-            backgroundColor: role === "user" ? theme.palette.grey[100] : 'white',
+            backgroundColor: message[0] === "user" ? theme.palette.grey[100] : 'white',
             borderRadius: "0.5rem",
             gap: "0.5rem",
             padding: "1rem"
@@ -38,7 +39,7 @@ export const Message = ({content, role}) => {
                 alignItems: "center",
             }}>
                 <img
-                    src={role === "user" ? "https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=Felix" : "https://api.dicebear.com/9.x/bottts-neutral/svg?seed=Aneka"}
+                    src={message[0] === "user" ? "https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=Felix" : "https://api.dicebear.com/9.x/bottts-neutral/svg?seed=Aneka"}
                     alt="avatar"
                     style={{
                         width: "2rem",
@@ -54,7 +55,7 @@ export const Message = ({content, role}) => {
                     remarkPlugins={remarkPlugins}
                     rehypePlugins={rehypePlugins}
                 >
-                    {content}
+                    {message[1]}
                 </ReactMarkdown>
             </Box>
         </Box>

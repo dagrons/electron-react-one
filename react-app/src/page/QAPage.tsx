@@ -8,18 +8,20 @@ import {Message} from "../component/chat/Message.tsx";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useRef, useState} from "react";
 import {streamChat} from "../api/chat.ts";
+import {RootState} from "../store/store.ts";
+import ChatMessage from "../types/chat.ts";
 
 
-const addChatHistory = (role, content) => ({type: "ADD_CHATHISTORY", role: role, content: content});
+const appendMessage = (message: ChatMessage) => ({type: "ADD_CHATHISTORY", message: message});
 const clearChatHistory = () => ({type: "CLEAR_CHATHISTORY"})
-const updateLastMessage = (role, content) => ({type: "UPDATE_LAST_MESSAGE", role: role, content: content});
+const updateLastMessage = (message: ChatMessage) => ({type: "UPDATE_LAST_MESSAGE", message: message});
 
 
 export const QAPage = () => {
     const theme = useTheme();
 
     // store state
-    const chatHistory = useSelector(state => state.chatHistory);
+    const chatHistory = useSelector((state: RootState) => state.chatHistory);
     const dispatch = useDispatch();
 
     // page local state
@@ -37,7 +39,7 @@ export const QAPage = () => {
             let lastMessage = "";
             for await (let value of streamChat('chatgpt-4o-latest', lastChatInput, chatHistory)) {
                 lastMessage += value;
-                dispatch(updateLastMessage('assistant', lastMessage));
+                dispatch(updateLastMessage(["assistant", lastMessage]));
                 chatHistoryBoxRef.current.scrollTop = chatHistoryBoxRef.current.scrollHeight;
             }
             setIsGenerating(false);
@@ -56,8 +58,8 @@ export const QAPage = () => {
                 dispatch(clearChatHistory());
                 setChatInput("")
             } else {
-                dispatch(addChatHistory("user", chatInput));
-                dispatch(addChatHistory('assistant', ""));
+                dispatch(appendMessage(["user", chatInput]));
+                dispatch(appendMessage(["assistant", ""]));
                 lastChatInput = chatInput;
                 setChatInput("");
                 setChatInputDisabled(true);
@@ -73,7 +75,7 @@ export const QAPage = () => {
     return (
         <>
             <Title><FontAwesomeIcon style={{marginRight: theme.spacing(1)}} icon={faRobot}/>QA问答</Title>
-            <MainContentItemBox ref={chatHistoryBoxRef} sx={{
+            <MainContentItemBox theme={theme} ref={chatHistoryBoxRef} sx={{
                 flexGrow: 1,
                 overflowY: "scroll",
                 display: "flex",
@@ -82,11 +84,11 @@ export const QAPage = () => {
             }}>
                 {
                     chatHistory.map((item, index) => (
-                        <Message key={index} content={item[1]} role={item[0]}/>
+                        <Message key={index} message={item}/>
                     ))
                 }
             </MainContentItemBox>
-            <MainContentItemBox sx={{
+            <MainContentItemBox theme={theme} sx={{
                 paddingBottom: theme.spacing(4)
             }}>
                 <ChatInput disabled={chatInputDisabled} value={chatInput} onChange={handleInputChange}

@@ -1,7 +1,7 @@
-import {Box} from "@mui/material";
+import {Box, Theme} from "@mui/material";
 import styled from "@emotion/styled";
 
-const MainContentItemBox = styled(Box)(({theme}) =>
+const MainContentItemBox = styled(Box)<{theme: Theme}>(({theme}) =>
     `
         width: 100%;
         max-width: 46rem;

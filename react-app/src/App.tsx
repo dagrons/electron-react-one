@@ -4,7 +4,6 @@ import logoImage from './assets/nyan-cat.png';
 import {Provider} from "react-redux";
 import store from "./store/store.ts";
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom"
-import {OSToolPage, OSToolPageSidebar} from "./page/OSToolPage.tsx"
 import {QAPage, QAPageSidebar} from "./page/QAPage.tsx"
 import {SidebarMenu, SideBarMenuButton} from "./component/SidebarMenuButton.tsx";
 import {theme} from "./theme.ts";

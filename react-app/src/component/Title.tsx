@@ -5,7 +5,7 @@ import MainContentItemBox from "./MainContentItemBox.tsx";
 const Title = ({children}) => {
     const theme = useTheme();
     return (
-        <MainContentItemBox sx={{
+        <MainContentItemBox theme={theme} sx={{
             paddingTop: theme.spacing(12)
         }}>
             <Typography variant={"h1"}>

@@ -1,9 +1,10 @@
 import styled from "@emotion/styled";
-import {Box, IconButton, useTheme} from "@mui/material";
+import {Box, IconButton, Theme, useTheme} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import MenuIcon from '@mui/icons-material/Menu';
 import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "../store/store.ts";
 
 
 const setOpen = (open) => ({type: "SET_OPEN", open: open});
@@ -14,11 +15,18 @@ const setTransitionEnabled = (transitionEnabled) => ({
     transitionEnabled: transitionEnabled
 });
 
-const SidebarBox = styled(Box, {
+interface SidebarProps {
+    theme: Theme;                // Material-UI 提供的 Theme 类型
+    open: boolean;               // 控制 Sidebar 是否打开
+    sideBarWidth: string | number;  // 宽度，可以是字符串或数字
+    transitionEnabled: boolean;  // 控制是否启用 transition 动画
+}
+
+const StyledSidebarBox = styled(Box, {
     shouldForwardProp(propName) {
         return !['theme', 'open', 'sideBarWidth', 'transitionEnabled'].includes(propName);
     }
-})(({theme, open, sideBarWidth, transitionEnabled}) => ({
+})<SidebarProps>(({theme, open, sideBarWidth, transitionEnabled}) => ({
     // position
     position: "fixed",
     // overflowX
@@ -40,10 +48,10 @@ const SidebarBox = styled(Box, {
 
 export const Sidebar = ({children}) => {
     const theme = useTheme();
-    const isOpen = useSelector(state => state.sidebar.open);
-    const sideBarWidth = useSelector(state => state.sidebar.sideBarWidth);
-    const isDragging = useSelector(state => state.sidebar.isDragging);
-    const transitionEnabled = useSelector(state => state.sidebar.transitionEnabled);
+    const isOpen = useSelector((state: RootState) => state.sidebar.open);
+    const sideBarWidth = useSelector((state: RootState) => state.sidebar.width);
+    const isDragging = useSelector((state: RootState) => state.sidebar.isDragging);
+    const transitionEnabled = useSelector((state: RootState) => state.sidebar.transitionEnabled);
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -54,7 +62,7 @@ export const Sidebar = ({children}) => {
                 dispatch(setSidebarWidth(newWidth))
             }
         }
-        const handleMouseUp = (e) => {
+        const handleMouseUp = () => {
             dispatch(setIsDragging(false));
             dispatch(setTransitionEnabled(true));
         }
@@ -68,7 +76,7 @@ export const Sidebar = ({children}) => {
         }
     }, [isDragging])
     return (
-        <SidebarBox open={isOpen} sideBarWidth={sideBarWidth} transitionEnabled={transitionEnabled}>
+        <StyledSidebarBox theme={theme} open={isOpen} sideBarWidth={sideBarWidth} transitionEnabled={transitionEnabled}>
             <IconButton
                 onClick={() => {
                     dispatch(setOpen(!isOpen))
@@ -102,15 +110,16 @@ export const Sidebar = ({children}) => {
             }}>
                 {children}
             </Box>
-        </SidebarBox>
+        </StyledSidebarBox>
     )
 }
 
-const MainContentBox = styled(Box, {
+
+const StyledMainContentBox = styled(Box, {
     shouldForwardProp(propName) {
         return !['theme', 'open', 'sideBarWidth', 'transitionEnabled'].includes(propName);
     }
-})(({theme, open, sideBarWidth, transitionEnabled}) => {
+})<SidebarProps>(({theme, open, sideBarWidth, transitionEnabled}) => {
     return {
         // display
         position: "relative",
@@ -126,12 +135,13 @@ const MainContentBox = styled(Box, {
 
 export const MainContent = ({children}) => {
     const theme = useTheme();
-    const isOpen = useSelector(state => state.sidebar.open);
-    const sideBarWidth = useSelector(state => state.sidebar.sideBarWidth);
-    const transitionEnabled = useSelector(state => state.sidebar.transitionEnabled);
+    const isOpen = useSelector((state: RootState) => state.sidebar.open);
+    const sideBarWidth = useSelector((state: RootState) => state.sidebar.width);
+    const transitionEnabled = useSelector((state: RootState) => state.sidebar.transitionEnabled);
     const dispatch = useDispatch()
     return (
-        <MainContentBox open={isOpen} sideBarWidth={sideBarWidth} transitionEnabled={transitionEnabled}>
+        <StyledMainContentBox theme={theme} open={isOpen} sideBarWidth={sideBarWidth}
+                              transitionEnabled={transitionEnabled}>
             {
                 !isOpen && <IconButton
                     onClick={() => {
@@ -157,6 +167,6 @@ export const MainContent = ({children}) => {
             }}>
                 {children}
             </Box>
-        </MainContentBox>
+        </StyledMainContentBox>
     )
 }
