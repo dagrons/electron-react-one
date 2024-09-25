@@ -22,7 +22,7 @@ function App() {
                             flexGrow: 1,
                             flexShrink: 1
                         }} src={logoImage} alt="Your image description"/>
-                        <SidebarMenu>
+                        <SidebarMenu theme={theme}>
                             <SideBarMenuButton to={"/"}>QA问答</SideBarMenuButton>
                             <SideBarMenuButton to={"/about"}>关于</SideBarMenuButton>
                         </SidebarMenu>
